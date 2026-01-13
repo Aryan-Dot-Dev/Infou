@@ -88,13 +88,6 @@ Ensure the Supabase project has the correct schema, buckets, and functions deplo
 
 ---
 
-## Suggested Extras (optional)
-- Add a `.env.example` (without secrets) listing required variable names.
-- Add internal deployment docs or CI instructions if needed.
-- Add tests when feasible.
-
----
-
 ## Support & Contact 📬
 For access requests, operational issues, or security concerns, contact the project owner or your team lead (internal channel).
 
