@@ -229,17 +229,6 @@ export function PDFViewerPage() {
             <div className="flex flex-1 overflow-hidden">
                 {/* Left Sidebar: Page Manager */}
                 <aside className="hidden lg:flex w-72 bg-card border-r border-border flex-col shrink-0 z-20 shadow-sm">
-                    {/* Sidebar Header */}
-                    <div className="p-4 border-b border-border">
-                        <div className="flex items-center justify-between mb-1">
-                            <h2 className="text-base font-bold text-white ">Page Manager</h2>
-                            <span className="bg-muted text-muted-foreground text-xs font-bold px-2 py-0.5 rounded-full" >
-                                {numPages}
-                            </span>
-                        </div>
-                        <p className="text-xs text-muted-foreground">Click page to view</p>
-                    </div>
-
                     {/* Thumbnails List */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
                         {pdfUrl && numPages > 0 && Array.from(new Array(numPages), (_, index) => {
