@@ -272,14 +272,7 @@ export function PDFViewerPage() {
                                         />
                                     </Document>
                                     {/* Hover Actions Overlay */}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                        <button className="bg-background text-foreground hover:text-red-500 p-1.5 rounded-full shadow-lg transition-transform hover:scale-110 cursor-pointer">
-                                            <IoTrash className="h-4 w-4" />
-                                        </button>
-                                        <button className="bg-background text-foreground hover:text-primary p-1.5 rounded-full shadow-lg transition-transform hover:scale-110 cursor-pointer">
-                                            <IoSync className="h-4 w-4" />
-                                        </button>
-                                    </div>
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"></div>
                                     <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm font-medium">
                                         {pageNum}
                                     </div>
