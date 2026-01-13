@@ -186,9 +186,9 @@ export function PDFViewerPage() {
                             <h1 className="text-sm sm:text-lg text-white font-bold leading-tight tracking-[-0.015em] truncate">
                                 {scan.pdf_name || 'Untitled Scan'}
                             </h1>
-                            <button className="text-muted-foreground hover:text-primary transition-colors shrink-0 cursor-pointer">
+                            {/* <button className="text-muted-foreground hover:text-primary transition-colors shrink-0 cursor-pointer">
                                 <MdEdit className="h-4 w-4" />
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -204,14 +204,7 @@ export function PDFViewerPage() {
                     >
                         <IoSparkles className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" className="hidden lg:flex" size="sm">
-                        <IoPrint className="mr-2 h-4 w-4" />
-                        Print
-                    </Button>
-                    <Button variant="outline" size="sm" className="px-2 sm:px-3">
-                        <IoShare className="h-4 w-4 sm:mr-2" />
-                        <span className="hidden sm:inline">Share</span>
-                    </Button>
+                    
                     <div className="hidden sm:block h-6 w-px bg-border mx-1"></div>
                     <Button onClick={handleDownload} size="sm" className="px-2 sm:px-4">
                         <IoDownload className="h-4 w-4 sm:mr-2" />
