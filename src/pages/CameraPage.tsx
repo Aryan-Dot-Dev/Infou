@@ -15,6 +15,7 @@ export function CameraPage() {
     const [pdfName, setPdfName] = useState('')
     const [processing, setProcessing] = useState(false)
     const navigate = useNavigate()
+    const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || ''
 
     const startCamera = useCallback(async () => {
         try {
@@ -103,7 +104,7 @@ export function CameraPage() {
                 formData.append('images', blob, `scan_${i + 1}.png`)
             }
 
-            const response = await fetch('https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/scan', {
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/scan`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${session.access_token}`,

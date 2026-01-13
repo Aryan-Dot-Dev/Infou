@@ -35,6 +35,7 @@ const DashboardPage = () => {
     const [confirmModal, setConfirmModal] = useState<{ isOpen: boolean; title: string; message: string; onConfirm: () => void } | null>(null)
     const [alertModal, setAlertModal] = useState<{ isOpen: boolean; title: string; message: string } | null>(null)
     const navigate = useNavigate()
+    const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || ''
 
     useEffect(() => {
         const checkUser = async () => {
@@ -101,7 +102,7 @@ const DashboardPage = () => {
         await Promise.all(
             scansToFetch.map(async (scan) => {
                 try {
-                    const response = await fetch('https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/clever-service', {
+                    const response = await fetch(`${SUPABASE_URL}/functions/v1/clever-service`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -153,7 +154,7 @@ const DashboardPage = () => {
                     }
 
                     const response = await fetch(
-                        'https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/deleteScan',
+                        `${SUPABASE_URL}/functions/v1/deleteScan`,
                         {
                             method: 'POST',
                             headers: {
@@ -204,7 +205,7 @@ const DashboardPage = () => {
             }
 
             const response = await fetch(
-                'https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/clever-service',
+                `${SUPABASE_URL}/functions/v1/clever-service`,
                 {
                     method: 'POST',
                     headers: {
@@ -266,7 +267,7 @@ const DashboardPage = () => {
 
             console.log('Sending', pendingImages.length, 'images to edge function')
 
-            const edgeFunctionUrl = 'https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/scan'
+            const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/scan`
             const anonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || ''
             
             const response = await fetch(edgeFunctionUrl, {

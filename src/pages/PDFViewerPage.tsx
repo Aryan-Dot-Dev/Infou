@@ -31,6 +31,7 @@ export function PDFViewerPage() {
     const [numPages, setNumPages] = useState<number>(0)
     const [pageWidth, setPageWidth] = useState(850)
     const [showSummary, setShowSummary] = useState(false)
+    const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || ''
 
     useEffect(() => {
         const updatePageWidth = () => {
@@ -80,7 +81,7 @@ export function PDFViewerPage() {
                 throw new Error('Authentication error')
             }
 
-            const response = await fetch('https://izmyrqxkusvzjwgjtezd.supabase.co/functions/v1/clever-service', {
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/clever-service`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
