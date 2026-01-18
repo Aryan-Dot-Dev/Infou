@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-tl": "bunx @tailwindcss/cli -i ./src/index.css -o ./src/output.css --watch"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.59.3",
@@ -16,6 +17,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/supabase-js": "^2.90.1",
     "@tailwindcss/vite": "^4.1.18",
+    "@wordpress/scripts": "^31.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",

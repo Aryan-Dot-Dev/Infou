@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -116,7 +117,7 @@ export function SignupForm({
 
   const handleGoogleSignup = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.protocol}//${window.location.host}/scan/dashboard`

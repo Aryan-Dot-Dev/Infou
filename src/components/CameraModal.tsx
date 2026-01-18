@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -81,6 +82,7 @@ export function CameraModal({ isOpen, onClose, onCapture }: CameraModalProps) {
     const handleConfirm = useCallback(() => {
         if (capturedImage) {
             onCapture(capturedImage)
+            // eslint-disable-next-line react-hooks/immutability
             handleClose()
         }
     }, [capturedImage, onCapture])

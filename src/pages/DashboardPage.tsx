@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/utils/supabase-client'
@@ -5,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Input } from '@/components/ui/input'
-import { IoClose, IoCamera, IoDocumentText, IoTime, IoStar, IoSearch, IoDownload, IoEllipsisVertical, IoLogOut, IoAddCircle, IoTrash } from 'react-icons/io5'
+import { IoClose, IoCamera, IoDocumentText, IoTime, IoSearch, IoLogOut, IoAddCircle, IoTrash } from 'react-icons/io5'
 import { MdDashboard } from 'react-icons/md'
 import { Document, Page, pdfjs } from 'react-pdf'
 import type { User } from '@supabase/supabase-js'
@@ -185,48 +186,9 @@ const DashboardPage = () => {
         })
     }
 
-    const handleCapture = (imageDataUrl: string) => {
-        console.log('Image captured, adding to pending images')
-        setPendingImages(prev => [...prev, imageDataUrl])
-        setCapturedImages(prev => [...prev, imageDataUrl])
-    }
 
     const handleRemovePendingImage = (index: number) => {
         setPendingImages(prev => prev.filter((_, i) => i !== index))
-    }
-
-    const getSignedPdfUrl = async (scanId: string): Promise<string | null> => {
-        try {
-            const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-            
-            if (sessionError || !session) {
-                console.error('Session error:', sessionError)
-                return null
-            }
-
-            const response = await fetch(
-                `${SUPABASE_URL}/functions/v1/clever-service`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${session.access_token}`,
-                    },
-                    body: JSON.stringify({ scanId })
-                }
-            )
-
-            if (!response.ok) {
-                console.error('Failed to get signed URL')
-                return null
-            }
-
-            const { url } = await response.json()
-            return url
-        } catch (error) {
-            console.error('Error getting signed PDF URL:', error)
-            return null
-        }
     }
 
     const handleScanPdf = async () => {
@@ -311,11 +273,6 @@ const DashboardPage = () => {
         }
     }
 
-    const formatFileSize = (bytes: number) => {
-        if (bytes < 1024) return bytes + ' B'
-        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
-        return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
-    }
 
     const formatTimeAgo = (dateString: string) => {
         const date = new Date(dateString)

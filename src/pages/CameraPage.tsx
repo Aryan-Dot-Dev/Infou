@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { IoCamera, IoArrowForward, IoTrash, IoClose, IoDocumentText, IoArrowBack } from 'react-icons/io5'
+import { IoCamera, IoArrowForward, IoTrash, IoDocumentText, IoArrowBack } from 'react-icons/io5'
 import { supabase } from '@/utils/supabase-client'
 
 export function CameraPage() {

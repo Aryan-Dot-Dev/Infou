@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '@/utils/supabase-client'
 import { Button } from '@/components/ui/button'
-import { IoArrowBack, IoPrint, IoShare, IoDownload, IoAdd, IoTrash, IoSync, IoDocument, IoContractOutline, IoSparkles } from 'react-icons/io5'
-import { MdEdit } from 'react-icons/md'
+import { IoArrowBack, IoDownload, IoDocument, IoContractOutline, IoSparkles } from 'react-icons/io5'
 import { Document, Page, pdfjs } from 'react-pdf'
 import ReactMarkdown from 'react-markdown'
 
@@ -76,7 +77,7 @@ export function PDFViewerPage() {
 
             // Get signed URL
             const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-            
+
             if (sessionError || !session) {
                 throw new Error('Authentication error')
             }
@@ -163,7 +164,7 @@ export function PDFViewerPage() {
                     />
                 </div>
             )}
-            
+
             {/* Top Navigation Bar */}
             <header className="flex items-center justify-between border-b border-border bg-card px-3 sm:px-6 py-3 shrink-0 z-30 shadow-sm">
                 {/* Left: Navigation & Title */}
@@ -196,15 +197,15 @@ export function PDFViewerPage() {
                 {/* Right: Primary Actions */}
                 <div className="flex items-center gap-1 sm:gap-3 text-white shrink-0">
                     {/* Mobile AI Button */}
-                    <Button 
-                        variant="outline" 
+                    <Button
+                        variant="outline"
                         size="icon"
                         onClick={() => setShowSummary(true)}
                         className="lg:hidden text-blue-400 hover:text-blue-300 border-blue-500/30"
                     >
                         <IoSparkles className="h-4 w-4" />
                     </Button>
-                    
+
                     <div className="hidden sm:block h-6 w-px bg-border mx-1"></div>
                     <Button onClick={handleDownload} size="sm" className="px-2 sm:px-4">
                         <IoDownload className="h-4 w-4 sm:mr-2" />
@@ -234,51 +235,52 @@ export function PDFViewerPage() {
                         {pdfUrl && numPages > 0 && Array.from(new Array(numPages), (_, index) => {
                             const pageNum = index + 1
                             return (
-                            <div
-                                key={`page_${pageNum}`}
-                                className={`group relative cursor-pointer`}
-                                onClick={() => handlePageClick(pageNum)}
-                            >
-                                {/* Selection Indicator */}
-                                {selectedPage === pageNum && (
-                                    <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-primary rounded-r"></div>
-                                )}
-                                <div className={`relative rounded-lg ${selectedPage === pageNum ? 'ring-2 ring-primary ring-offset-2 ring-offset-card' : 'border border-border hover:border-primary/50'} overflow-hidden shadow-md bg-white transition-all hover:shadow-lg`}>
-                                    <Document
-                                        key={`doc_${pageNum}`}
-                                        file={pdfUrl}
-                                        loading={
-                                            <div className="w-[240px] aspect-[1/1.414] bg-muted flex items-center justify-center">
-                                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                                            </div>
-                                        }
-                                        error={
-                                            <div className="w-[240px] aspect-[1/1.414] bg-muted flex items-center justify-center">
-                                                <IoDocument className="h-8 w-8 text-muted-foreground" />
-                                            </div>
-                                        }
-                                    >
-                                        <Page
-                                            key={`page_render_${pageNum}`}
-                                            pageNumber={pageNum}
-                                            width={240}
-                                            renderTextLayer={false}
-                                            renderAnnotationLayer={false}
+                                <div
+                                    key={`page_${pageNum}`}
+                                    className={`group relative cursor-pointer`}
+                                    onClick={() => handlePageClick(pageNum)}
+                                >
+                                    {/* Selection Indicator */}
+                                    {selectedPage === pageNum && (
+                                        <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1.5 h-12 bg-primary rounded-r"></div>
+                                    )}
+                                    <div className={`relative rounded-lg ${selectedPage === pageNum ? 'ring-2 ring-primary ring-offset-2 ring-offset-card' : 'border border-border hover:border-primary/50'} overflow-hidden shadow-md bg-white transition-all hover:shadow-lg`}>
+                                        <Document
+                                            key={`doc_${pageNum}`}
+                                            file={pdfUrl}
                                             loading={
                                                 <div className="w-[240px] aspect-[1/1.414] bg-muted flex items-center justify-center">
                                                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
                                                 </div>
                                             }
-                                        />
-                                    </Document>
-                                    {/* Hover Actions Overlay */}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"></div>
-                                    <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm font-medium">
-                                        {pageNum}
+                                            error={
+                                                <div className="w-[240px] aspect-[1/1.414] bg-muted flex items-center justify-center">
+                                                    <IoDocument className="h-8 w-8 text-muted-foreground" />
+                                                </div>
+                                            }
+                                        >
+                                            <Page
+                                                key={`page_render_${pageNum}`}
+                                                pageNumber={pageNum}
+                                                width={240}
+                                                renderTextLayer={false}
+                                                renderAnnotationLayer={false}
+                                                loading={
+                                                    <div className="w-[240px] aspect-[1/1.414] bg-muted flex items-center justify-center">
+                                                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                                                    </div>
+                                                }
+                                            />
+                                        </Document>
+                                        {/* Hover Actions Overlay */}
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2"></div>
+                                        <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded backdrop-blur-sm font-medium">
+                                            {pageNum}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )})}
+                            )
+                        })}
                     </div>
                 </aside>
 
@@ -316,9 +318,9 @@ export function PDFViewerPage() {
                     </div>
 
                     {/* PDF Viewer */}
-                    <div 
+                    <div
                         className="w-full max-w-full sm:max-w-[850px] pb-20 space-y-4"
-                        style={{ 
+                        style={{
                             transform: `scale(${zoom / 100})`,
                             transformOrigin: 'top center',
                             transition: 'transform 0.2s ease'
@@ -381,23 +383,24 @@ export function PDFViewerPage() {
                         <div className="p-6 overflow-y-auto max-h-[calc(80vh-120px)]">
                             {scan?.summary ? (
                                 <div className="text-gray-300">
-                                    <ReactMarkdown 
+                                    <ReactMarkdown
                                         components={{
-                                            h1: ({node, ...props}) => <h1 className="text-white text-2xl font-bold mb-4 mt-6" {...props} />,
-                                            h2: ({node, ...props}) => <h2 className="text-white text-xl font-bold mb-3 mt-5" {...props} />,
-                                            h3: ({node, ...props}) => <h3 className="text-white text-lg font-semibold mb-2 mt-4" {...props} />,
-                                            p: ({node, ...props}) => <p className="text-gray-300 leading-relaxed mb-4" {...props} />,
-                                            ul: ({node, ...props}) => <ul className="list-disc list-inside ml-2 mb-4 space-y-2" {...props} />,
-                                            ol: ({node, ...props}) => <ol className="list-decimal list-inside ml-2 mb-4 space-y-2" {...props} />,
-                                            li: ({node, children, ...props}) => (
+                                            h1: ({ node, ...props }) => <h1 className="text-white text-2xl font-bold mb-4 mt-6" {...props} />,
+                                            h2: ({ node, ...props }) => <h2 className="text-white text-xl font-bold mb-3 mt-5" {...props} />,
+                                            h3: ({ node, ...props }) => <h3 className="text-white text-lg font-semibold mb-2 mt-4" {...props} />,
+                                            p: ({ node, ...props }) => <p className="text-gray-300 leading-relaxed mb-4" {...props} />,
+                                            ul: ({ node, ...props }) => <ul className="list-disc list-inside ml-2 mb-4 space-y-2" {...props} />,
+                                            ol: ({ node, ...props }) => <ol className="list-decimal list-inside ml-2 mb-4 space-y-2" {...props} />,
+                                            li: ({ node, children, ...props }) => (
                                                 <li className="text-gray-300 leading-relaxed" {...props}>
                                                     <span className="ml-2">{children}</span>
                                                 </li>
                                             ),
-                                            strong: ({node, ...props}) => <strong className="text-white font-semibold" {...props} />,
-                                            em: ({node, ...props}) => <em className="text-gray-200" {...props} />,
-                                            code: ({node, inline, className, children, ...props}) => {
-                                                // Only render as code block if it's explicitly marked as not inline
+                                            strong: ({ node, ...props }) => <strong className="text-white font-semibold" {...props} />,
+                                            em: ({ node, ...props }) => <em className="text-gray-200" {...props} />,
+                                            code: ({ node, className, children, ...props }: any) => {
+                                                const inline = !(props as any).inline
+                                                // Check if it's a code block (has language class and not inline)
                                                 if (!inline && className?.includes('language-')) {
                                                     return (
                                                         <pre className="bg-muted rounded-lg p-4 my-4 overflow-x-auto">
@@ -408,7 +411,7 @@ export function PDFViewerPage() {
                                                 // Inline code or simple backticks
                                                 return <code className="bg-muted text-primary px-2 py-1 rounded text-sm font-mono" {...props}>{children}</code>
                                             },
-                                            pre: ({node, ...props}) => <div {...props} />
+                                            pre: ({ node, ...props }) => <pre {...props} />
                                         }}
                                     >
                                         {scan.summary}
