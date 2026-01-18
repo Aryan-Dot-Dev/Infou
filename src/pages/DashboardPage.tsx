@@ -482,7 +482,7 @@ const DashboardPage = () => {
                                     <div className="flex flex-col sm:flex-row">
                                         <div className="w-full sm:w-2/7 h-64 bg-transparent from-primary/20 to-primary/5 flex items-center justify-center p-4">
                                             <img 
-                                                src="./scan-illustration.svg" 
+                                                src="/scan-illustration.svg" 
                                                 alt="Scan documents to PDF" 
                                                 className="w-full h-full object-contain scale-110"
                                             />
