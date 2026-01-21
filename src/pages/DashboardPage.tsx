@@ -510,7 +510,7 @@ const DashboardPage = () => {
 
                         {/* Pending Images Section */}
                         {pendingImages.length > 0 && (
-                            <section>
+                            <section className="relative">
                                 <Card>
                                     <CardHeader>
                                         <div className="flex items-center justify-between">
@@ -589,6 +589,44 @@ const DashboardPage = () => {
                                         </div>
                                     </CardContent>
                                 </Card>
+
+                                {/* Processing Overlay with Skeleton Loader */}
+                                {processingPdf && (
+                                    <div className="absolute inset-0 bg-background/95 backdrop-blur-md rounded-lg z-50 flex items-center justify-center p-4">
+                                        <div className="w-full max-w-md">
+                                            <Card className="border-2 border-primary/20 shadow-2xl">
+                                                <CardContent className="pt-6 space-y-4">
+                                                    <div className="flex flex-col items-center text-center space-y-4">
+                                                        <div className="relative">
+                                                            <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary/20 border-t-primary"></div>
+                                                            <IoDocumentText className="absolute inset-0 m-auto h-8 w-8 text-primary" />
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                            <h3 className="text-xl font-semibold">Processing Your PDF</h3>
+                                                            <p className="text-sm text-muted-foreground">
+                                                                Converting {pendingImages.length} image{pendingImages.length > 1 ? 's' : ''} into a PDF document...
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className="space-y-3 pt-2">
+                                                        <Skeleton className="h-4 w-full" />
+                                                        <Skeleton className="h-4 w-4/5" />
+                                                        <Skeleton className="h-4 w-3/5" />
+                                                    </div>
+                                                    
+                                                    <div className="pt-2">
+                                                        <div className="grid grid-cols-3 gap-2">
+                                                            <Skeleton className="h-20 w-full rounded-md" />
+                                                            <Skeleton className="h-20 w-full rounded-md" />
+                                                            <Skeleton className="h-20 w-full rounded-md" />
+                                                        </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </div>
+                                    </div>
+                                )}
                             </section>
                         )}
 
