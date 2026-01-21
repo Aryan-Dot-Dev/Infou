@@ -115,7 +115,7 @@ const DashboardPage = () => {
                     
                     if (response.ok) {
                         const result = await response.json()
-                        urls[scan.id] = result.url
+                        urls[scan.id] = result?.url
                     }
                 } catch (error) {
                     console.error(`Error fetching PDF URL for scan ${scan.id}:`, error)
@@ -255,11 +255,11 @@ const DashboardPage = () => {
             setPendingImages([])
             setPdfName('')
             
-            if (result.scanId) {
-                console.log('Scan ID retrieved:', result.scanId)
+            if (result?.scanId) {
+                console.log('Scan ID retrieved:', result?.scanId)
                 fetchScans()
                 // Navigate to the PDF viewer page
-                navigate(`/scan/view/${result.scanId}`)
+                navigate(`/scan/view/${result?.scanId}`)
             }
         } catch (error: any) {
             console.error('Error processing scan:', error)
@@ -622,7 +622,7 @@ const DashboardPage = () => {
                                 </Card>
                             ) : (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4">
-                                    {filteredScans.map((scan) => (
+                                    {filteredScans.filter(scan => pdfUrls[scan.id]).map((scan) => (
                                         <Card 
                                             key={scan.id} 
                                             className="group border hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-200 overflow-hidden cursor-pointer"

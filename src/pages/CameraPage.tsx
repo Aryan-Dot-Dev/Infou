@@ -69,7 +69,8 @@ export function CameraPage() {
             const ctx = canvas.getContext('2d')
             if (ctx) {
                 ctx.drawImage(video, 0, 0)
-                const imageDataUrl = canvas.toDataURL('image/png')
+                // Compress image using JPEG format with 0.8 quality
+                const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8)
                 setCapturedPages(prev => [...prev, imageDataUrl])
             }
         }
@@ -102,7 +103,25 @@ export function CameraPage() {
             for (let i = 0; i < capturedPages.length; i++) {
                 const base64Response = await fetch(capturedPages[i])
                 const blob = await base64Response.blob()
-                formData.append('images', blob, `scan_${i + 1}.png`)
+                // Compress blob if it's larger than 500KB
+                let finalBlob = blob
+                if (blob.size > 500000) {
+                    const img = new Image()
+                    img.src = capturedPages[i]
+                    await new Promise(resolve => img.onload = resolve)
+                    
+                    const canvas = document.createElement('canvas')
+                    canvas.width = img.width
+                    canvas.height = img.height
+                    const ctx = canvas.getContext('2d')
+                    if (ctx) {
+                        ctx.drawImage(img, 0, 0)
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7)
+                        const compressedResponse = await fetch(compressedDataUrl)
+                        finalBlob = await compressedResponse.blob()
+                    }
+                }
+                formData.append('images', finalBlob, `scan_${i + 1}.jpg`)
             }
 
             const response = await fetch(`${SUPABASE_URL}/functions/v1/scan`, {

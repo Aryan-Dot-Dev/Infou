@@ -86,7 +86,8 @@ export function CameraPageMobile() {
             const ctx = canvas.getContext('2d')
             if (ctx) {
                 ctx.drawImage(video, 0, 0)
-                const imageDataUrl = canvas.toDataURL('image/png')
+                // Compress image using JPEG format with 0.8 quality
+                const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8)
                 setCapturedPages(prev => [...prev, imageDataUrl])
             }
         }
@@ -114,7 +115,25 @@ export function CameraPageMobile() {
             for (let i = 0; i < capturedPages.length; i++) {
                 const response = await fetch(capturedPages[i])
                 const blob = await response.blob()
-                formData.append('images', blob, `page_${i + 1}.png`)
+                // Compress blob if it's larger than 500KB
+                let finalBlob = blob
+                if (blob.size > 500000) {
+                    const img = new Image()
+                    img.src = capturedPages[i]
+                    await new Promise(resolve => img.onload = resolve)
+                    
+                    const canvas = document.createElement('canvas')
+                    canvas.width = img.width
+                    canvas.height = img.height
+                    const ctx = canvas.getContext('2d')
+                    if (ctx) {
+                        ctx.drawImage(img, 0, 0)
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7)
+                        const compressedResponse = await fetch(compressedDataUrl)
+                        finalBlob = await compressedResponse.blob()
+                    }
+                }
+                formData.append('images', finalBlob, `page_${i + 1}.jpg`)
             }
 
             const edgeFunctionUrl = `${SUPABASE_URL}/functions/v1/scan`
@@ -135,7 +154,7 @@ export function CameraPageMobile() {
             const result = await scanResponse.json()
             
             if (result.scanId) {
-                navigate(`/scan/view/${result.scanId}`)
+                navigate(`/scan/view/${result?.scanId}`)
             } else {
                 navigate('/scan/dashboard')
             }
@@ -290,7 +309,7 @@ export function CameraPageMobile() {
                     <Button
                         onClick={handleFinish}
                         disabled={capturedPages.length === 0 || processing}
-                        className="min-w-[80px] h-12 px-5 bg-primary text-white text-sm font-bold hover:bg-primary/90 active:scale-95 transition-all rounded-xl disabled:opacity-50 disabled:shadow-none shadow-lg shadow-primary/40"
+                        className="min-w-[80px] h-12 px-5 bg-primary text-sm font-bold hover:bg-primary/90 active:scale-95 transition-all rounded-xl disabled:opacity-50 disabled:shadow-none shadow-lg shadow-primary/40"
                     >
                         {processing ? 'Processing...' : `Done (${capturedPages.length})`}
                     </Button>

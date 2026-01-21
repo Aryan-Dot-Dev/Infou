@@ -97,7 +97,7 @@ export function PDFViewerPage() {
             }
 
             const result = await response.json()
-            setPdfUrl(result.url)
+            setPdfUrl(result?.url)
         } catch (err: any) {
             console.error('Error fetching scan:', err)
             setError(err.message || 'Failed to load PDF')
