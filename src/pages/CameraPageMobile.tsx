@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 // import { Skeleton } from '@/components/ui/skeleton'
-import { IoFlash, IoClose, IoDocumentText, IoAdd, IoPencil } from 'react-icons/io5'
+import { IoClose, IoDocumentText, IoAdd, IoPencil } from 'react-icons/io5'
 import { supabase } from '@/utils/supabase-client'
 
 export function CameraPageMobile() {
@@ -349,7 +349,7 @@ export function CameraPageMobile() {
                     <div className="relative w-full max-w-md" onClick={(e) => e.stopPropagation()}>
                         <button
                             className="absolute top-3 right-3 z-50 bg-white/10 hover:bg-white/20 rounded-full p-2"
-                            onClick={() => removePage(previewIndex)}
+                            onClick={() => setPreviewIndex(null)}
                         >
                             <IoClose className="text-white text-xl" />
                         </button>
