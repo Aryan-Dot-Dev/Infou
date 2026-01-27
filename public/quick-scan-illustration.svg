@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#6EE7B7"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background rounded card -->
+  <rect x="30" y="30" width="540" height="340" rx="20" fill="#0f172a" />
+
+  <!-- stylized paper -->
+  <rect x="90" y="70" width="260" height="320" rx="12" fill="url(#g1)" opacity="0.95" />
+  <rect x="110" y="90" width="220" height="40" rx="6" fill="#fff" opacity="0.85" />
+  <rect x="110" y="140" width="180" height="12" rx="6" fill="#fff" opacity="0.65" />
+  <rect x="110" y="164" width="160" height="12" rx="6" fill="#fff" opacity="0.5" />
+  <rect x="110" y="188" width="140" height="12" rx="6" fill="#fff" opacity="0.35" />
+
+  <!-- camera device -->
+  <g transform="translate(380,80)">
+    <rect x="0" y="0" width="160" height="120" rx="18" fill="url(#g2)" />
+    <circle cx="80" cy="60" r="28" fill="#0B1220" />
+    <circle cx="80" cy="60" r="18" fill="url(#g1)" />
+    <rect x="18" y="10" width="40" height="24" rx="6" fill="#fff" opacity="0.12" />
+  </g>
+
+  <!-- motion arrow indicating quick scan -->
+  <g transform="translate(340,200)">
+    <path d="M0 0 L60 -40 L60 -10 L140 -10" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+    <circle cx="150" cy="-10" r="14" fill="#fff" />
+  </g>
+
+  <!-- small decorative dots -->
+  <circle cx="70" cy="330" r="6" fill="#94A3B8" opacity="0.6" />
+  <circle cx="530" cy="60" r="5" fill="#C7D2FE" opacity="0.6" />
+
+  <!-- label -->
+  <text x="120" y="50" fill="#E6F4EA" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Quick Scan</text>
+</svg>

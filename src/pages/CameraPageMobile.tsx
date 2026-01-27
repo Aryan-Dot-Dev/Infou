@@ -18,6 +18,7 @@ export function CameraPageMobile() {
     const [processing, setProcessing] = useState(false)
     const [pdfName, setPdfName] = useState('')
     const [isEditingName, setIsEditingName] = useState(false)
+    const [previewIndex, setPreviewIndex] = useState<number | null>(null)
     const navigate = useNavigate()
     const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || ''
 
@@ -93,6 +94,11 @@ export function CameraPageMobile() {
                 setCapturedPages(prev => [...prev, imageDataUrl])
             }
         }
+    }, [])
+
+    const removePage = useCallback((index: number) => {
+        setCapturedPages(prev => prev.filter((_, i) => i !== index))
+        setPreviewIndex(null)
     }, [])
 
     const handleFinish = async () => {
@@ -203,12 +209,11 @@ export function CameraPageMobile() {
                     </button>
                     <div className="flex flex-col items-center">
                         <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Scan Document</h2>
-                        <span className="text-white/70 text-xs font-medium uppercase tracking-widest mt-0.5">Auto Mode</span>
                     </div>
                     <div className="flex w-12 items-center justify-end">
-                        <button className="flex size-10 items-center justify-center rounded-full text-white hover:bg-white/10 transition-colors cursor-pointer">
+                        {/* <button className="flex size-10 items-center justify-center rounded-full text-white hover:bg-white/10 transition-colors cursor-pointer">
                             <IoFlash className="text-2xl" />
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 
@@ -272,10 +277,19 @@ export function CameraPageMobile() {
                         {capturedPages.map((page, index) => (
                             <div key={index} className="flex flex-col gap-2 shrink-0">
                                 <div className="relative size-20 rounded-lg border-2 border-white/50 overflow-hidden shadow-xl">
-                                    <img src={page} alt={`Page ${index + 1}`} className="h-full w-full object-cover" />
-                                    <div className="absolute top-1 right-1 bg-primary size-5 rounded-full flex items-center justify-center text-[10px] text-white font-bold">
-                                        {index + 1}
-                                    </div>
+                                    <img
+                                        src={page}
+                                        alt={`Page ${index + 1}`}
+                                        className="h-full w-full object-cover"
+                                        onClick={() => setPreviewIndex(index)}
+                                    />
+                                    <button
+                                        className="absolute top-1 right-1 bg-neutral-600/80 hover:bg-red-500 size-5 rounded-full flex items-center justify-center text-[10px] text-white font-bold p-1"
+                                        onClick={(e) => { e.stopPropagation(); removePage(index) }}
+                                        aria-label={`Remove page ${index + 1}`}
+                                    >
+                                        <IoClose className="text-xs" />
+                                    </button>
                                 </div>
                             </div>
                         ))}
@@ -291,9 +305,10 @@ export function CameraPageMobile() {
                 {/* Shutter & Main Controls */}
                 <div className="flex items-center justify-between px-8 py-4">
                     {/* Gallery Toggle */}
-                    <button className="flex shrink-0 items-center justify-center rounded-full size-12 bg-white/10 backdrop-blur-md text-white border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
-                        <IoDocumentText className="text-xl" />
-                    </button>
+                    <div className="flex shrink-0 items-center justify-center rounded-full size-12">
+                        {/* <IoDocumentText className="text-xl" /> */}
+                    </div>
+                    {/* <div></div> */}
 
                     {/* Main Shutter Button */}
                     <button 
@@ -318,15 +333,31 @@ export function CameraPageMobile() {
                 </div>
 
                 {/* Interaction Mode Select */}
-                <div className="flex justify-center gap-6 px-4 pb-2">
+                {/* <div className="flex justify-center gap-6 px-4 pb-2">
                     <button className="text-xs font-bold text-white tracking-widest uppercase cursor-pointer">Document</button>
-                </div>
+                </div> */}
             </div>
 
             {/* iOS Bottom Indicator */}
             <div className="h-1.5 w-32 bg-white/30 rounded-full absolute bottom-2 left-1/2 -translate-x-1/2 z-10"></div>
 
             <canvas ref={canvasRef} className="hidden" />
+
+            {/* Mobile preview overlay */}
+            {previewIndex !== null && (
+                <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/90 p-4" onClick={() => setPreviewIndex(null)}>
+                    <div className="relative w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            className="absolute top-3 right-3 z-50 bg-white/10 hover:bg-white/20 rounded-full p-2"
+                            onClick={() => removePage(previewIndex)}
+                        >
+                            <IoClose className="text-white text-xl" />
+                        </button>
+
+                        <img src={capturedPages[previewIndex]} alt={`Preview ${previewIndex + 1}`} className="w-full h-auto rounded-lg object-contain" />
+                    </div>
+                </div>
+            )}
 
             {/* Processing Overlay with Skeleton Loader */}
             {processing && (

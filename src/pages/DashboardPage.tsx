@@ -396,15 +396,15 @@ const DashboardPage = () => {
                         >
                             <MdDashboard className="h-5 w-5" />
                             <span className="text-sm font-medium">Dashboard</span>
-                        </button>
-                        <button 
-                            onClick={() => setActiveFilter('recent')}
-                            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer ${
-                                activeFilter === 'recent' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-accent hover:text-foreground transition-colors'
-                            }`}
+                        <Button 
+                            variant="ghost" 
+                            size="icon"
+                            className="lg:hidden text-muted-foreground hover:text-red-500 hover:bg-transparent dark:hover:bg-transparent"
+                            onClick={handleSignOut}
+                            title="Sign out"
                         >
-                            <IoTime className="h-5 w-5" />
-                            <span className="text-sm font-medium">Recent</span>
+                            <p className='' >Logout</p>
+                        </Button>
                         </button>
                     </div>
                 </div>
@@ -432,14 +432,14 @@ const DashboardPage = () => {
                 <header className="h-14 sm:h-16 flex-shrink-0 border-b border-border bg-card/80 backdrop-blur-md flex items-center justify-between px-4 sm:px-8">
                     <div className="flex items-center gap-3">
                         {/* Mobile Profile Avatar */}
-                        <div className="lg:hidden h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold overflow-hidden shrink-0">
+                        {/* <div className="lg:hidden h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center text-primary font-semibold overflow-hidden shrink-0">
                             {user?.user_metadata?.avatar_url ? (
                                 <img src={user.user_metadata.avatar_url} alt="" className="w-full h-full object-cover" />
                             ) : (
                                 <span className="text-sm">{user?.email?.charAt(0).toUpperCase()}</span>
                             )}
-                        </div>
-                        <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white ">{activeFilter === 'recent' ? 'Recent' : 'Dashboard'}</h2>
+                        </div> */}
+                        <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white ">{activeFilter === 'recent' ? 'Recent' : 'Infou'}</h2>
                     </div>
                     <div className="flex items-center gap-3 sm:gap-6">
                         <div className="hidden lg:flex relative">
@@ -451,23 +451,23 @@ const DashboardPage = () => {
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        <Button 
+                        {/* <Button 
                             variant="ghost" 
                             size="icon"
                             className="lg:hidden text-muted-foreground hover:text-foreground"
                             onClick={() => navigate('/scan/camera')}
                         >
-                            <IoCamera className="h-5 w-5" />
-                        </Button>
+                            {/* <IoCamera className="h-5 w-5" /> */}
+                        {/* </Button> */}
                         {/* Mobile Sign Out Button */}
                         <Button 
                             variant="ghost" 
-                            size="icon"
-                            className="lg:hidden text-muted-foreground hover:text-foreground"
+                            // size="icon"
+                            className="lg:hidden text-muted-foreground hover:text-red-500 hover:bg-red-500"
                             onClick={handleSignOut}
                             title="Sign out"
                         >
-                            <IoLogOut className="h-5 w-5" />
+                            <p className='' >Logout</p>
                         </Button>
                     </div>
                 </header>
@@ -482,24 +482,24 @@ const DashboardPage = () => {
                                     <div className="flex flex-col sm:flex-row">
                                         <div className="w-full sm:w-2/7 h-64 bg-transparent from-primary/20 to-primary/5 flex items-center justify-center p-4">
                                             <img 
-                                                src="/scan-illustration.svg" 
-                                                alt="Scan documents to PDF" 
-                                                className="w-full h-full object-contain scale-110"
+                                                src="/scanning.gif" 
+                                                alt="Quick scan illustration" 
+                                                className="w-full h-full object-contain scale-70"
                                             />
                                         </div>
-                                        <div className="flex flex-col justify-center p-6 sm:p-8 flex-1">
-                                            <h3 className="text-2xl font-bold mb-2">Create New PDF</h3>
+                                        <div className="flex flex-col justify-center items-center text-center p-6 sm:p-8 flex-1 sm:items-start sm:text-left">
+                                            <h3 className="text-2xl font-bold mb-2">Quick Scan</h3>
                                             <p className="text-muted-foreground mb-6">
-                                                Capture documents with your camera or combine existing images into a professional PDF file instantly.
+                                                Snap pages, then fine-tune and export a polished PDF, fast and simple.
                                             </p>
-                                            <div className="flex flex-wrap gap-3">
+                                            <div className="flex flex-wrap gap-3 justify-center sm:justify-start">
                                                 <Button 
                                                     onClick={() => navigate('/scan/camera')} 
                                                     size="lg"
                                                     className="shadow-sm"
                                                 >
                                                     <IoCamera className="mr-2 h-5 w-5" />
-                                                    Start Capture
+                                                    Start Quick Scan
                                                 </Button>
                                             </div>
                                         </div>
